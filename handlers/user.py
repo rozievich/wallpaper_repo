@@ -5,11 +5,12 @@ from aiogram.dispatcher import FSMContext
 from states.admin_state import AdminState, RekState
 from utils.misc.translations import translate_txt
 from utils.misc.send_ads import send_adversment
+from utils.db_api.orm import User
 from data.api_source import UniversalAPI
 from data.config import ADMINS
 from keyboards.btns import exit_btn, main_btn, admin_btn
 
-
+user = User()
 api = UniversalAPI()
 
 @dp.message_handler(Text("Top 🔝"))
@@ -63,7 +64,7 @@ async def back_menu(msg: types.Message):
 @dp.message_handler(Text("📊 Statistika"))
 async def statistika(msg: types.Message):
     if msg.from_user.id in ADMINS:
-        await msg.answer(text=f'Foydalanuvchilar Soni: 10')
+        await msg.answer(text=f'Foydalanuvchilar Soni: {len(user.all_users())}')
     else:
         await msg.answer("Siz admin emassiz ❌")
 
@@ -86,7 +87,7 @@ async def rek_state_handler(msg: types.Message, state: FSMContext):
         await state.finish()
         await bot.send_message(chat_id=msg.chat.id, text="Reklama yuborish boshlandi 🤖✅", reply_markup=admin_btn())
         summa = 0
-        users = [123]
+        users = user.all_users()
         for i in users:
             if int(i[1]) not in ADMINS:
                 summa += await send_adversment(msg, i[1])

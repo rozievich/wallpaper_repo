@@ -2,11 +2,16 @@ from aiogram import types
 from loader import dp
 from uuid import uuid4
 from data.api_source import UniversalAPI
+from utils.db_api.orm import User
 
 api = UniversalAPI()
+user = User()
 
 @dp.inline_handler()
 async def send_data(query: types.InlineQuery):
+    check = user.get_user(str(query.from_user.id))
+    if not check:
+        user.create_user(str(query.from_user.id), query.from_user.username, query.from_user.first_name)
     try:
         data = await api.inline_pic(query.query)
         results = []
