@@ -2,10 +2,8 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
 
 
 def main_btn():
-    btn = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, row_width=3)
-    btn.add(KeyboardButton('Search 🔍'), KeyboardButton('Top 🔝'),
-            KeyboardButton('🌐 Site', web_app=WebAppInfo(url='https://www.pexels.com/search/nature%20wallpaper/')),
-            KeyboardButton('Dasturchiga xabar 💬'))
+    btn = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, row_width=2)
+    btn.add(KeyboardButton('Top 🔝'), KeyboardButton('Dasturchiga xabar 💬'))
     return btn
 
 

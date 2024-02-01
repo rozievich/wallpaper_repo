@@ -5,9 +5,5 @@ class AdminState(StatesGroup):
     comment = State()
 
 
-class Search(StatesGroup):
-    search = State()
-
-
 class RekState(StatesGroup):
     reklama = State()
