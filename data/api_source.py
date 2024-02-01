@@ -20,8 +20,20 @@ class UniversalAPI:
                 else:
                     return []
             except:
-                print(f"HTTP error occurred")
+                return []
 
+    async def inline_pic(self, msg: str):
+        index = await translate_txt(msg)
+        async with httpx.AsyncClient() as client:
+            try:
+                result = httpx.get(self.HOST, headers={'Authorization': self.AUTH}, params={'query': index,'per_page': 50})
+                if result.status_code == 200:
+                    data = result.json()
+                    return data['photos']
+                else:
+                    return []
+            except:
+                return []
 
     async def trend_pic(self):
         async with httpx.AsyncClient() as client:
@@ -41,4 +53,4 @@ class UniversalAPI:
                 else:
                     return []
             except:
-                print("HTTP error occurred")
+                return []
